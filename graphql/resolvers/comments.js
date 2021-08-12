@@ -1,4 +1,4 @@
-const { Post } = require("../../models");
+const { Post, Comment } = require("../../models");
 
 const { AuthenticationError, ApolloError } = require("apollo-server-express");
 
@@ -16,6 +16,20 @@ module.exports = {
       }
       throw new ApolloError("Unable to create a comment");
     },
+  },
+
+  Query: {
+    async getAllComments(_, { postId }, { user = null }) {
+      if (!user) {
+        throw new AuthenticationError("You must login to create a comment");
+      }
+
+      const post = await Post.findByPk(postId);
+      if (!post) {
+        throw new ApolloError("Unable to create a comment");
+      }
+      return Comment.findAll({ where: { postId } });
+    }
   },
 
   Comment: {

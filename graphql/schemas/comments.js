@@ -11,6 +11,10 @@ module.exports = gql`
 
   }
 
+  extend type Query {
+      getAllComments(postId: Int!): [Comment!]
+  }
+
   extend type Mutation {
       createComment(content: String!, postId: Int!): CreateCommentResponse
   }
