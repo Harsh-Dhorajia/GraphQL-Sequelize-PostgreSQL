@@ -1,10 +1,10 @@
-const {User} = require('../../models');
 const jwt = require('jsonwebtoken');
 const { AuthenticationError } = require('apollo-server-express');
+const { User } = require('../../models');
 
-const verifyToken = async (token) => {
+const verifyToken = async token => {
   try {
-    if (!token) return null
+    if (!token) return null;
     const { id } = await jwt.verify(token, process.env.SECRET_KEY);
     const user = await User.findByPk(id);
     return user;
@@ -15,6 +15,6 @@ const verifyToken = async (token) => {
 
 module.exports = async ({ req }) => {
   const token = (req.headers && req.headers.authorization) || '';
-  const user = await verifyToken(token)
+  const user = await verifyToken(token);
   return { user };
 };

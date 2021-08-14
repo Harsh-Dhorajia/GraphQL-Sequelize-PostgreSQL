@@ -1,5 +1,5 @@
-const { Post, User } = require('../../models');
 const { AuthenticationError } = require('apollo-server-express');
+const { Post, User } = require('../../models');
 
 module.exports = {
   Mutation: {
@@ -18,14 +18,14 @@ module.exports = {
   },
 
   Query: {
-    async getAllPosts(root, args, context) {
-      const posts = await Post.findAll({include: [
-        { model: User, as: "author", attributes: ["name", "email"] },
-      ],});
+    async getAllPosts() {
+      const posts = await Post.findAll({
+        include: [{ model: User, as: 'author', attributes: ['name', 'email'] }],
+      });
       return posts;
     },
 
-    async getSinglePost(_, { postId }, context) {
+    async getSinglePost(_, { postId }) {
       const post = await Post.findByPk(postId);
       return post;
     },

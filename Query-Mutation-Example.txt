@@ -1,0 +1,59 @@
+mutation register{
+  register(input: {name: "harsh12", email: "harsh@jio.com", password: "123456789"}){
+    id
+    name
+    email
+  }
+}
+
+mutation login{
+  login(input: {email: "harsh@jio.com", password: "123456789"}) {
+    token
+		user{
+      id
+      name
+    }
+  }
+}
+
+mutation createPost{
+  createPost(title: "Post 123", content: "Content 212313") {
+    id
+    title
+    content
+    
+  }
+}
+
+query getAllPosts {
+  getAllPosts {
+    id
+    title
+    content
+    author{
+      id
+      name
+      email
+    }
+    comments{
+      id
+      content
+    } 
+  }
+}
+
+query getSinglePost{
+  getSinglePost(postId: 9){
+    id
+  	title
+    content
+  }
+}
+
+mutation createComment {
+   createComment(content: "New post comment", postId: 9) {
+    id
+    content
+    createdAt
+  }
+}

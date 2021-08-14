@@ -16,15 +16,17 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  User.beforeCreate(async (user) => {
+  User.beforeCreate(async user => {
+    // eslint-disable-next-line no-param-reassign
     user.password = await user.generatePasswordHash();
   });
-  User.prototype.generatePasswordHash = function () {
+  // eslint-disable-next-line consistent-return
+  User.prototype.generatePasswordHash = () => {
     if (this.password) {
       return bcrypt.hash(this.password, 10);
     }
   };
-  User.associate = function (models) {
+  User.associate = models => {
     // associations can be defined here
     User.hasMany(models.Post, { foreignKey: 'userId', as: 'posts' });
   };
