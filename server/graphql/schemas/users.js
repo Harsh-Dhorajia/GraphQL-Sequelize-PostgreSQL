@@ -6,6 +6,7 @@ module.exports = gql`
     name: String!
     email: String!
     password: String!
+    isAdmin: Boolean!
     posts: [Post!]
   }
 
@@ -14,16 +15,22 @@ module.exports = gql`
     login(input: LoginInput!): LoginResponse
   }
 
+  extend type Query {
+    getAllUsers: [User]! @isAdmin
+  }
+
   type RegisterResponse {
     id: Int!
     name: String!
     email: String!
+    isAdmin: Boolean!
   }
 
   input RegisterInput {
     name: String!
     email: String!
     password: String!
+    isAdmin: Boolean
   }
 
   input LoginInput {

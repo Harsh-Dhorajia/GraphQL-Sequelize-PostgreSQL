@@ -4,6 +4,7 @@ const typeDefs = require('./graphql/schemas');
 const resolvers = require('./graphql/resolvers');
 const context = require('./graphql/contexts');
 const db = require('./models');
+const isAdminDirective = require('./graphql/directives/isAdmin');
 
 // Construct a schema, using GraphQL schema language
 // const typeDefs = gql`
@@ -23,10 +24,13 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context,
+  schemaDirectives: {
+    isAdmin: isAdminDirective,
+  },
   playground: {
     endpoint: '/graphql',
   },
-  context,
 });
 
 db.sequelize.sync({ alter: true })

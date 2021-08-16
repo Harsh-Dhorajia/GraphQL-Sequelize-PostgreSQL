@@ -4,6 +4,8 @@ const postType = require('./posts');
 const commentType = require('./comments');
 
 const rootType = gql`
+  directive @isAdmin on FIELD_DEFINITION
+
   type Query {
     root: String
   }
